@@ -10,6 +10,7 @@ import (
 	"net/rpc"
 	"strings"
 
+	reuseport "github.com/kavu/go_reuseport"
 	"github.com/soheilhy/cmux"
 	"golang.org/x/net/websocket"
 	"google.golang.org/grpc"
@@ -96,7 +97,7 @@ func (my mylogin) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	res.Write([]byte("dalong demo"))
 }
 func main() {
-	l, err := net.Listen("tcp", ":50051")
+	l, err := reuseport.Listen("tcp", ":50051")
 	if err != nil {
 		log.Panic(err)
 	}
