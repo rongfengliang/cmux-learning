@@ -118,9 +118,11 @@ func main() {
 	// Then we used the muxed listeners.
 	go serveGRPC(grpcl)
 	go serveWS(wsl)
-	go serveHTTP(httpl)
+	// go serveHTTP(httpl)
 	go serveRPC(rpcl)
-
+	go func() {
+		http.Serve(httpl, &mylogin{})
+	}()
 	if err := m.Serve(); !strings.Contains(err.Error(), "use of closed network connection") {
 		panic(err)
 	}
